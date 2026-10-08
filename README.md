@@ -6,6 +6,10 @@ React + TypeScript + Vite，通过浏览器 Gamepad API 读取 Xbox、DualShock 
 
 ## 启动
 
+**在线使用：https://reloadggg.github.io/apex-input-range/**
+
+无需安装，打开网址、连接手柄即可练习。首次使用请在「键位对照」导入自己的 Apex profile，内置键位只是示例。配置文件在浏览器内解析，每位用户的设置与记录保存在自己的浏览器中；localhost 的数据不会自动迁移到公开网站。
+
 需要 Node.js 22.6+（推荐 Node.js 24）。
 
 ```powershell
@@ -121,7 +125,25 @@ LS / RS 是摇杆按下。前后方案均可手动编辑，也支持手柄单键
 
 数据在当前浏览器、当前地址的 localStorage；清理浏览器数据或更换地址会影响记录。网络用于首次安装依赖和可选字体，字体失败时使用系统字体。
 
-## 验证
+## 公网部署
+
+### GitHub Pages（已配置自动发布）
+
+仓库中的 `.github/workflows/pages.yml` 会在 `main` 更新后自动测试、构建并发布网站。仓库 **Settings → Pages → Build and deployment → Source** 使用 **GitHub Actions**。PR 只运行测试和构建，不发布。
+
+工作流使用 Node.js 24，并将 Pages 的子目录传给 Vite，确保 `/apex-input-range/` 下的脚本、样式和图标正确加载。需要手动重新部署时，进入 **Actions → Deploy GitHub Pages → Run workflow**。
+
+### Cloudflare Pages（可选）
+
+1. 登录 Cloudflare，进入 **Workers & Pages → Create application → Pages → Import an existing Git repository**。
+2. 授权 GitHub，并选择 `reloadggg/apex-input-range`。
+3. 生产分支填写 `main`，构建命令为 `npm run build`，输出目录为 `dist`，根目录保持仓库根目录。
+4. 添加环境变量 `NODE_VERSION=24`，不要设置 `VITE_BASE_PATH`。
+5. 点击 **Save and Deploy**，完成后使用 Cloudflare 提供的 HTTPS `*.pages.dev` 地址。
+
+之后推送到 `main` 会自动更新。当前项目只需要免费静态托管，无需 Functions、数据库或自购域名。GitHub Pages 和 Cloudflare 可以同时部署，两个网址的浏览器记录各自独立。
+
+## 本地验证
 
 ```powershell
 npm run build

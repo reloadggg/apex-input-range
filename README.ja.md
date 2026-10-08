@@ -6,6 +6,8 @@ Apex のボタン配置変更に慣れるためのローカル練習アプリで
 
 ## 起動
 
+インストールせずに **https://reloadggg.github.io/apex-input-range/** から利用できます。コントローラーを接続し、**ボタン配置**で自分の Apex profile を読み込んでください。同梱の配置はサンプルです。ファイルは端末内で解析し、設定と履歴は各ブラウザーに保存します。localhost のデータは公開サイトへ自動移行されません。
+
 Node.js 22.6 以降（Node.js 24 推奨）を使用してください。
 
 ```powershell
@@ -86,6 +88,16 @@ USB / Bluetooth ともに、ブラウザーの `standard` マッピングが必�
 設定と履歴は現在のブラウザー・アドレスのlocalStorageに保存します。ブラウザーデータの削除やアドレスの変更で保存内容が変わることがあります。任意の外部フォントが読み込めない場合はシステムフォントを使用します。ゲームへの入力送信は行いません。
 
 ## 開発と検証
+
+### GitHub Pages で公開
+
+`.github/workflows/pages.yml` が `main` を自動ビルド・公開します。**Settings → Pages → Build and deployment** で **GitHub Actions** を選んでください。プルリクエストでは単体テストとビルドのみ実行し、公開はしません。Node.js 24 を使用し、Pages のサブパスを Vite に渡すため、リポジトリ配下でも画像やスクリプトを正しく読み込めます。手動再公開は **Actions → Deploy GitHub Pages → Run workflow** から実行できます。
+
+### 別の方法：Cloudflare Pages
+
+Cloudflare の **Workers & Pages → Create application → Pages → Import an existing Git repository** を開き、`reloadggg/apex-input-range` へのアクセスを許可します。本番ブランチは `main`、ビルドコマンドは `npm run build`、出力先は `dist`、環境変数は `NODE_VERSION=24` に設定します。ルートディレクトリはリポジトリ直下とし、`VITE_BASE_PATH` は設定しません。**Save and Deploy** を押すと HTTPS の `*.pages.dev` アドレスが発行されます。その後は `main` の更新で自動公開されます。静的ホスティングだけを使うため、Functions、データベース、独自ドメインは不要です。
+
+### ローカルでの確認
 
 ```powershell
 npm run build

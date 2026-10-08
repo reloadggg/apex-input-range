@@ -6,6 +6,8 @@ A local React, TypeScript and Vite app for adapting to new Apex controller bindi
 
 ## Run
 
+Use the public site at **https://reloadggg.github.io/apex-input-range/** without installing anything. Connect your controller and import your own Apex profile in **Bindings**. The bundled layout is an example. Files are parsed locally; settings and history stay in each browser. Data from localhost does not automatically move to the public site.
+
 Use Node.js 22.6 or later (Node.js 24 recommended).
 
 ```powershell
@@ -86,6 +88,16 @@ Keyboard demo is available in the controller monitor. A/B/X/Y use the same lette
 Settings and history live in localStorage for the current browser and address. Clearing browser data or changing the address affects persistence. Optional remote fonts fall back to system fonts. The trainer never sends inputs to the game.
 
 ## Development and validation
+
+### Publish with GitHub Pages
+
+The workflow in `.github/workflows/pages.yml` builds and deploys `main` automatically. In **Settings → Pages → Build and deployment**, select **GitHub Actions**. Pull requests run unit tests and build checks without publishing. The workflow uses Node.js 24 and passes the Pages base path to Vite, so assets work under the repository subdirectory. Manual redeploys are available under **Actions → Deploy GitHub Pages → Run workflow**.
+
+### Alternative: Cloudflare Pages
+
+In Cloudflare, open **Workers & Pages → Create application → Pages → Import an existing Git repository** and authorize `reloadggg/apex-input-range`. Use production branch `main`, build command `npm run build`, output directory `dist`, and environment variable `NODE_VERSION=24`. Keep the root directory at the repository root and leave `VITE_BASE_PATH` unset. Select **Save and Deploy** to receive an HTTPS `*.pages.dev` address. Future pushes to `main` rebuild the site automatically. This app uses static hosting only; no Functions, database, or custom domain is required.
+
+### Local checks
 
 ```powershell
 npm run build
