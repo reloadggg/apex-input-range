@@ -1,0 +1,56 @@
+.language-picker select { border: 1px solid #dce3ed; background: #fff; border-radius: 5px; padding: 7px 10px; color: #64748b; font: inherit; min-width: 92px; }
+.config-import-guide { padding: 22px 25px; border: 1px solid #e2e7ee; background: #fff; border-radius: 9px; margin-bottom: 20px; color: #68798e; }
+.config-import-guide h2 { display: flex; align-items: center; gap: 9px; font-size: 15px; margin: 0 0 18px; }
+.config-import-guide ol { margin: 0; padding-left: 21px; }
+.config-import-guide li { padding-left: 5px; margin-bottom: 16px; font-size: 12px; }
+.config-import-guide strong { font-weight: 500; }
+.config-import-guide p { font-size: 11px; line-height: 1.9; margin: 6px 0 10px; color: #7f8c9d; }
+.config-import-guide details { border-top: 1px solid #edf0f4; padding-top: 13px; }
+.config-import-guide summary { font-size: 11px; cursor: pointer; }
+.config-path-row { display: flex; align-items: center; gap: 9px; }
+.config-path-row input { flex: 1; min-width: 0; border: 1px solid #e2e7ef; border-radius: 5px; background: #f7f9fc; font: 12px/1.6 Consolas, monospace; padding: 10px; color: #52657d; }
+.config-path-row button { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border: 1px solid #e5cbbb; background: #fff5ed; border-radius: 5px; padding: 10px 12px; font-size: 11px; color: #a56c47; }
+.config-import-guide .config-copy-status { margin: 12px 0 0; color: #997355; }
+.config-path-row :focus-visible, .language-picker select:focus-visible { outline: 2px solid #ca8058; outline-offset: 3px; }
+.quick-drill { min-width: 0; }
+.quick-drill.combat { grid-column: 1 / -1; }
+.connection-dot { width: 7px; height: 7px; background: #c0c7d2; border-radius: 50%; flex-shrink: 0; }
+.connected .connection-dot { background: #48a482; box-shadow: 0 0 0 4px #eef8f3; }
+.weight-row em { margin-left: 7px; font-size: 8px; font-style: normal; color: #bd805d; }
+.file-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.file-chips > span { display: flex; gap: 6px; align-items: center; font-size: 10px; border: 1px solid #e4e9ef; border-radius: 4px; padding: 5px 8px; max-width: 100%; overflow-wrap: anywhere; }
+.import-result { font-size: 11px; color: #75879b; line-height: 1.8; margin-top: 12px; }
+.import-result small { display: block; font-size: 9px; }
+.import-preview > div { display: flex; justify-content: space-between; padding: 4px 0; }
+html:not([lang="zh-CN"]) .heading-row { flex-wrap: wrap; }
+html:not([lang="zh-CN"]) .heading-row h1 { line-height: 1.25; max-width: 680px; }
+html:not([lang="zh-CN"]) .heading-row h1 em { margin-left: .15em; }
+html:not([lang="zh-CN"]) .metric-detail { white-space: normal; line-height: 1.6; min-height: 26px; }
+html:not([lang="zh-CN"]) .metric-label { flex-wrap: wrap; line-height: 1.5; }
+html:not([lang="zh-CN"]) .mode-switch button { white-space: normal; }
+html:not([lang="zh-CN"]) .combo-prompt .combo-step-number > span { white-space: normal; text-align: right; }
+html:not([lang="zh-CN"]) .combo-prompt li > small { white-space: normal; }
+html:not([lang="zh-CN"]) .combo-prompt .combo-heading > span { white-space: normal; text-align: right; }
+html:not([lang="zh-CN"]) .quick-drills-heading { flex-wrap: wrap; }
+html:not([lang="zh-CN"]) .quick-drills-heading > span { flex-wrap: wrap; }
+html:not([lang="zh-CN"]) .group-option { flex-wrap: wrap; }
+html:not([lang="zh-CN"]) .source-chip { max-width: 100%; }
+html:not([lang="zh-CN"]) .remap-summary > div:not(.summary-tip) { white-space: normal; }
+@media (max-width: 540px) {
+  .config-import-guide { padding: 18px 15px; }
+  .config-import-guide h2 { font-size: 13px; }
+  .config-path-row { flex-wrap: wrap; }
+  .config-path-row input { flex-basis: 100%; width: 100%; font-size: 10px; }
+  .config-path-row button { padding: 8px 10px; }
+  .language-picker select { min-width: 83px; padding: 5px 7px; }
+  html:not([lang="zh-CN"]) .quick-drill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html:not([lang="zh-CN"]) .quick-drill-grid.category-movement { grid-template-columns: 1fr; }
+  html:not([lang="zh-CN"]) .combo-prompt.sequence-strip.long-combo ol.combo-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  html:not([lang="zh-CN"]) .drill-categories button { flex-wrap: wrap; }
+  html:not([lang="zh-CN"]) .connection-badge > div { flex-wrap: wrap; gap: 6px; }
+  html:not([lang="zh-CN"]) .practice-top { height: auto; min-height: 53px; flex-wrap: wrap; gap: 8px; padding: 12px 15px; }
+  html:not([lang="zh-CN"]) .section-name { flex-wrap: wrap; }
+  html:not([lang="zh-CN"]) .comparison-heading { flex-wrap: wrap; }
+  html:not([lang="zh-CN"]) .page-actions { flex-wrap: wrap; }
+  html:not([lang="zh-CN"]) .secondary-button { white-space: normal; }
+}

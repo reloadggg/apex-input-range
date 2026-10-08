@@ -1,0 +1,22 @@
+{
+    "before":  [
+                   {
+                       "text":  "bind_US_standard \"A_BUTTON\" \"+ability 0\" 0\nbind_held_US_standard \"A_BUTTON\" \"+ability_held 0\" 0\nbind_US_standard \"B_BUTTON\" \"+ability 1\" 0\nbind_held_US_standard \"B_BUTTON\" \"+ability_held 1\" 0\nbind_US_standard \"X_BUTTON\" \"+ability 2\" 0\nbind_held_US_standard \"X_BUTTON\" \"+ability_held 2\" 0\nbind_US_standard \"Y_BUTTON\" \"+ability 3\" 0\nbind_held_US_standard \"Y_BUTTON\" \"+ability_held 3\" 0\nbind_US_standard \"L_SHOULDER\" \"+ability 6\" 0\nbind_held_US_standard \"L_SHOULDER\" \"+ability_held 6\" 0\nbind_US_standard \"R_SHOULDER\" \"+ability 7\" 0\nbind_held_US_standard \"R_SHOULDER\" \"+ability_held 7\" 0\nbind_US_standard \"BACK\" \"+ability 14\" 0\nbind_held_US_standard \"BACK\" \"say_team\" 0\nbind_US_standard \"START\" \"ingamemenu_activate\" 0\nbind_US_standard \"STICK1\" \"+ability 8\" 0\nbind_held_US_standard \"STICK1\" \"+ability_held 8\" 0\nbind_US_standard \"STICK2\" \"+ability 9\" 0\nbind_held_US_standard \"STICK2\" \"+ability_held 9\" 0\nbind_US_standard \"UP\" \"+ability 10\" 0\nbind_held_US_standard \"UP\" \"+ability_held 10\" 0\nbind_US_standard \"RIGHT\" \"+ability 13\" 0\nbind_held_US_standard \"RIGHT\" \"+ability_held 13\" 0\nbind_US_standard \"DOWN\" \"+ability 11\" 0\nbind_held_US_standard \"DOWN\" \"+ability_held 11\" 0\nbind_US_standard \"LEFT\" \"+ability 12\" 0\nbind_held_US_standard \"LEFT\" \"+ability_held 12\" 0\nbind_US_standard \"L_TRIGGER\" \"+ability 4\" 0\nbind_held_US_standard \"L_TRIGGER\" \"+ability_held 4\" 0\nbind_US_standard \"R_TRIGGER\" \"+ability 5\" 0\nbind_held_US_standard \"R_TRIGGER\" \"+ability_held 5\" 0",
+                       "name":  "settings_backup.cfg"
+                   },
+                   {
+                       "text":  "gamepad_button_layout \"0\"\ngamepad_buttons_are_southpaw \"0\"\ngamepad_custom_pilot \"0,1,2,3,4,5,6,7,8,9,10,11,12,13\"",
+                       "name":  "profile_backup.cfg"
+                   }
+               ],
+    "after":  [
+                  {
+                      "text":  "bind_US_standard \"A_BUTTON\" \"+ability 0\" 0\nbind_held_US_standard \"A_BUTTON\" \"+ability_held 0\" 0\nbind_US_standard \"B_BUTTON\" \"+ability 1\" 0\nbind_held_US_standard \"B_BUTTON\" \"+ability_held 1\" 0\nbind_US_standard \"X_BUTTON\" \"+ability 2\" 0\nbind_held_US_standard \"X_BUTTON\" \"+ability_held 2\" 0\nbind_US_standard \"Y_BUTTON\" \"+ability 3\" 0\nbind_held_US_standard \"Y_BUTTON\" \"+ability_held 3\" 0\nbind_US_standard \"L_SHOULDER\" \"+ability 6\" 0\nbind_held_US_standard \"L_SHOULDER\" \"+ability_held 6\" 0\nbind_US_standard \"R_SHOULDER\" \"+ability 7\" 0\nbind_held_US_standard \"R_SHOULDER\" \"+ability_held 7\" 0\nbind_US_standard \"BACK\" \"+ability 14\" 0\nbind_held_US_standard \"BACK\" \"say_team\" 0\nbind_US_standard \"START\" \"ingamemenu_activate\" 0\nbind_US_standard \"STICK1\" \"+ability 8\" 0\nbind_held_US_standard \"STICK1\" \"+ability_held 8\" 0\nbind_US_standard \"STICK2\" \"+ability 9\" 0\nbind_held_US_standard \"STICK2\" \"+ability_held 9\" 0\nbind_US_standard \"UP\" \"+ability 10\" 0\nbind_held_US_standard \"UP\" \"+ability_held 10\" 0\nbind_US_standard \"RIGHT\" \"+ability 13\" 0\nbind_held_US_standard \"RIGHT\" \"+ability_held 13\" 0\nbind_US_standard \"DOWN\" \"+ability 11\" 0\nbind_held_US_standard \"DOWN\" \"+ability_held 11\" 0\nbind_US_standard \"LEFT\" \"+ability 12\" 0\nbind_held_US_standard \"LEFT\" \"+ability_held 12\" 0\nbind_US_standard \"L_TRIGGER\" \"+ability 4\" 0\nbind_held_US_standard \"L_TRIGGER\" \"+ability_held 4\" 0\nbind_US_standard \"R_TRIGGER\" \"+ability 5\" 0\nbind_held_US_standard \"R_TRIGGER\" \"+ability_held 5\" 0",
+                      "name":  "settings.cfg"
+                  },
+                  {
+                      "text":  "gamepad_button_layout \"6\"\ngamepad_buttons_are_southpaw \"0\"\ngamepad_custom_pilot \"8,9,2,7,4,5,0,1,6,3,10,11,12,13,14\"",
+                      "name":  "profile.cfg"
+                  }
+              ]
+}

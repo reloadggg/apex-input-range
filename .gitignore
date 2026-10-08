@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.tsbuildinfo
+*.log
+.DS_Store
+test-results/
+.playwright-mcp/
+*.cfg
+.env
+.env.*
+!.env.example
+input-range-history*.json
+playwright-report/
+.vscode/
+.idea/
+Thumbs.db
