@@ -531,5 +531,7 @@
   "删除": "Delete",
   "删除此动作组？": "Delete this sequence?",
   "确认删除": "Confirm deletion",
-  "还没有动作组，点击「新建动作组」录入你容易按错的顺序。": "No sequences yet. Click New sequence to enter a button order you find difficult."
+  "还没有动作组，点击「新建动作组」录入你容易按错的顺序。": "No sequences yet. Click New sequence to enter a button order you find difficult.",
+  "查看项目源码（新标签页）": "View source code (opens in a new tab)",
+  "查看 MIT 许可证（新标签页）": "View the MIT License (opens in a new tab)"
 }

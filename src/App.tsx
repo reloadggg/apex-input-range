@@ -1,6 +1,6 @@
 import { localizeTree as L, tx, useLanguage, LANGUAGE_STORAGE_KEY, formatDate } from './i18n';
 import { useEffect, useState } from 'react';
-import { Activity, ArrowDownToLine, ArrowRight, AudioLines, Check, ChevronRight, CircleHelp, Clock3, Crosshair, Flame, Gamepad2, History, Keyboard, LayoutGrid, Link2, Pause, Play, RotateCcw, Settings2, ShieldCheck, SlidersHorizontal, Square, Target, Trophy, Volume2, VolumeX, X, Zap } from 'lucide-react';
+import { Activity, ArrowDownToLine, ArrowRight, AudioLines, Check, ChevronRight, CircleHelp, Clock3, Crosshair, Flame, Gamepad2, Github, History, Keyboard, LayoutGrid, Link2, Pause, Play, RotateCcw, Settings2, ShieldCheck, SlidersHorizontal, Square, Target, Trophy, Volume2, VolumeX, X, Zap } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Controller from './Controller';
 import { ControllerLayoutContext, useControllerLabels } from './ControllerLayout';
@@ -15,6 +15,7 @@ import BindingsPanel from './BindingsPanel';
 import AdaptSettings from './AdaptSettings';
 import { ComboPrompt, QuickDrills } from './ComboTrainer';
 type Page = 'train' | 'bindings' | 'history' | 'guide';
+const PROJECT_URL = 'https://github.com/reloadggg/apex-input-range';
 const NAV: {
     id: Page;
     label: string;
@@ -138,7 +139,7 @@ export default function App() {
       <div className="sidebar-bottom"><div className="daily-card"><span className="daily-icon"><Activity size={18}/></span><div>一点练习，更多本能。<p>{`今天已完成 ${todayHits} 次正确输入`}</p></div><div className="daily-track"><span style={{ width: `${Math.min(100, todayHits)}%` }}/></div><small>每日小目标 <b>{todayHits} / 100</b></small></div><div className="local-note"><ShieldCheck size={14}/>数据仅保存在当前浏览器</div><div className="sidebar-version">INPUT RANGE <span>V.1.0</span></div></div>
     </aside>
     <div className="main-shell">
-      <header className="topbar"><div className="breadcrumb">工作空间<ChevronRight size={13}/><span>{NAV.find(n => n.id === page)?.label}</span></div><div className="topbar-right"><label className="language-picker" translate="no"><select aria-label="Language / 语言 / 言語" value={language} onChange={e => setLanguage(e.target.value)}><option value="zh-CN">中文</option><option value="en">English</option><option value="ja">日本語</option></select></label><span className="local-badge"><span className="tiny-dot"/>本地训练</span><Gamepad2 size={18}/></div></header>
+      <header className="topbar"><div className="breadcrumb">工作空间<ChevronRight size={13}/><span>{NAV.find(n => n.id === page)?.label}</span></div><div className="topbar-right"><label className="language-picker" translate="no"><select aria-label="Language / 语言 / 言語" value={language} onChange={e => setLanguage(e.target.value)}><option value="zh-CN">中文</option><option value="en">English</option><option value="ja">日本語</option></select></label><span className="local-badge"><span className="tiny-dot"/>本地训练</span><a className="project-link" href={PROJECT_URL} target="_blank" rel="noopener noreferrer" title="查看项目源码（新标签页）"><Github size={15} aria-hidden="true"/>GitHub</a></div></header>
       <main>
         <div className="page-heading"><div className="eyebrow"><span/>INPUT RANGE / APEX</div><div className="heading-row"><div><h1>{page === 'train' ? <>把新键位，练成<em>下意识。</em></> : page === 'bindings' ? '看清改动，练掉旧习惯。' : page === 'history' ? '每一次练习，都有迹可循。' : '从连接手柄开始。'}</h1><p>{page === 'train' ? '为 Apex 改键后的适应期而生。少一点误触，多一点肌肉记忆。' : page === 'bindings' ? '导入 Apex 配置，对照改键前后，让高频动作接得更顺。' : page === 'history' ? '回顾反应速度与误触，找到下一次练习的重点。' : '一分钟准备，把注意力交给下一次输入。'}</p></div><div className={`connection-badge ${ready ? 'connected' : ''}`}><span className="connection-dot"/><div>{demo ? '键盘体验模式' : device ? device.standard ? '手柄已连接' : '非标准映射' : '等待手柄连接'}<small>{demo ? '模拟输入 · 单独记录' : device ? CONTROLLER_NAMES[layout] : '连接后按任意手柄键'}</small></div><Gamepad2 size={20}/></div></div></div>
         {trainer.apiError && <p className="notice error">{trainer.apiError}</p>}
@@ -199,7 +200,7 @@ export default function App() {
           ].map(([title, body], i) => <section className="guide-card" key={title}><div><span className="state-icon"><Gamepad2 size={23}/></span><span className="guide-step">0{i + 1}</span></div><h2>{title}</h2><p>{body}</p>{i === 1 && <button className="text-button" onClick={() => navigate('bindings')}>键位对照<ArrowRight size={13}/></button>}</section>)}</div>
           <section className="faq-card"><h2>手柄没有被识别？</h2><p>先在 Windows「设置 → 蓝牙和设备」中确认连接，再回到浏览器按下手柄按键。页面需要保持前台，并通过 HTTPS 网站或本机 localhost 打开。需要浏览器提供 standard 映射。如果不支持，可更新浏览器、改用 USB，或使用将设备输出为标准手柄的映射工具。DS4Windows / Steam Input 输出虚拟 Xbox 时，可在顶部手动选择 PS 按键显示。</p><p>Elite 背键通常表现为它所映射的普通按键，浏览器无法单独区分。Xbox / PS 系统键、触摸板、麦克风键与震动不参与训练。本版支持双键组合与连续动作组；暂不训练摇杆方向和长按时长。</p><p>暂时没有手柄时，可以在训练场的「手柄监视器」启用键盘体验。体验成绩不会计入手柄每日目标。</p></section>
         </>}
-        <footer className="page-footer"><span><span className="tiny-dot"/>专注输入，建立本能。</span><span>MADE FOR YOUR NEXT DROP.<span className="footer-square"/></span></footer>
+        <footer className="page-footer"><span><span className="tiny-dot"/>专注输入，建立本能。</span><div className="project-links"><a className="project-link" href={PROJECT_URL} target="_blank" rel="noopener noreferrer" title="查看项目源码（新标签页）"><Github size={13} aria-hidden="true"/>GitHub</a><span aria-hidden="true">·</span><a className="project-link" href={`${PROJECT_URL}/blob/main/LICENSE`} target="_blank" rel="noopener noreferrer" title="查看 MIT 许可证（新标签页）">MIT License</a></div></footer>
       </main>
     </div>
   </div></ControllerLayoutContext.Provider>);
