@@ -2,7 +2,13 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
+[GitHub 源码](https://github.com/reloadggg/apex-input-range) · [MIT License](LICENSE)
+
 React + TypeScript + Vite，通过浏览器 Gamepad API 读取 Xbox、DualShock 4（PS4）和 DualSense（PS5）手柄。支持键位导入、前后对照、高频动作与连续操作训练，无需后端或账号。
+
+## 开源协议
+
+本项目采用 [MIT 许可证](LICENSE)，Copyright (c) 2026 reloadggg。允许使用、修改、分发和商业使用；分发时需保留版权及许可声明。软件按原样提供，不作担保。
 
 ## 启动
 

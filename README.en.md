@@ -2,7 +2,13 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
+[Source on GitHub](https://github.com/reloadggg/apex-input-range) · [MIT License](LICENSE)
+
 A React, TypeScript and Vite app for adapting to new Apex controller bindings, available online or locally. Compare old and new layouts, practice frequent actions, and rehearse complete button sequences on one page. Supports Xbox, DualShock 4 and DualSense through the browser Gamepad API. No account or backend required.
+
+## License
+
+Released under the [MIT License](LICENSE). Copyright (c) 2026 reloadggg. Use, modification, redistribution and commercial use are permitted with the copyright and permission notices retained. The software is provided as is, without warranty.
 
 ## Run
 

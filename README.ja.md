@@ -2,7 +2,13 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
+[GitHub ソースコード](https://github.com/reloadggg/apex-input-range) · [MIT License](LICENSE)
+
 Apex のボタン配置変更に慣れるための練習アプリです。公開サイトでもローカルでも利用でき、変更前後の比較、頻出アクション、連続操作を同じ画面で練習できます。React / TypeScript / Vite とブラウザーの Gamepad API を使用し、Xbox、DualShock 4、DualSense に対応します。アカウントやバックエンドは不要です。
+
+## ライセンス
+
+本プロジェクトは [MIT ライセンス](LICENSE) で公開しています。Copyright (c) 2026 reloadggg。著作権表示と許諾表示を保持すれば、利用、改変、再配布、商用利用が可能です。本ソフトウェアは無保証で提供されます。
 
 ## 起動
 
