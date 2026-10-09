@@ -2,9 +2,11 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-Apex のボタン配置変更に慣れるためのローカル練習アプリです。変更前後の比較、頻出アクション、連続操作を同じ画面で練習できます。React / TypeScript / Vite とブラウザーの Gamepad API を使用し、Xbox、DualShock 4、DualSense に対応します。アカウントやバックエンドは不要です。
+Apex のボタン配置変更に慣れるための練習アプリです。公開サイトでもローカルでも利用でき、変更前後の比較、頻出アクション、連続操作を同じ画面で練習できます。React / TypeScript / Vite とブラウザーの Gamepad API を使用し、Xbox、DualShock 4、DualSense に対応します。アカウントやバックエンドは不要です。
 
 ## 起動
+
+インストールせずに **https://apex-input-range.pages.dev/** から利用できます。コントローラーを接続し、**ボタン配置**で自分の Apex profile を読み込んでください。同梱の配置はサンプルです。ファイルは端末内で解析し、設定と履歴は各ブラウザーに保存します。localhost のデータは公開サイトへ自動移行されません。
 
 Node.js 22.6 以降（Node.js 24 推奨）を使用してください。
 
@@ -87,11 +89,50 @@ USB / Bluetooth ともに、ブラウザーの `standard` マッピングが必�
 
 ## 開発と検証
 
+### Cloudflare Pages（現在の公開先）
+
+`apex-input-range` プロジェクトは Cloudflare Pages の **Direct Upload** を利用し、**https://apex-input-range.pages.dev/** で公開しています。無料の静的ホスティングで動作し、Functions、データベース、サーバーは不要です。
+
+独自ドメイン **https://apex.efastt.store/** は Pages に登録済みです。`efastt.store` → **DNS → Records** で次のレコードを設定し、**Pages → Custom domains** が Active になると利用できます。HTTPS 証明書は Cloudflare が自動発行します。
+
+| 種類 | 名前 | ターゲット | プロキシ | TTL |
+| --- | --- | --- | --- | --- |
+| CNAME | `apex` | `apex-input-range.pages.dev` | 有効（オレンジ色の雲） | 自動 |
+
+管理者は初回デプロイ前に、プロジェクトを所有する Cloudflare アカウントへログインしてください。
+
+```powershell
+npx wrangler@4.149.0 login --scopes account:read user:read pages:write
+```
+
+更新時はリポジトリ直下で順番に実行し、各コマンドの成功を確認してから次へ進みます。
+
+```powershell
+npm ci
+npm test
+$env:VITE_BASE_PATH = '/'
+npm run build
+npx wrangler@4.149.0 pages deploy dist --project-name apex-input-range --branch main
+```
+
+GitHub にプッシュするだけでは、**現在の Direct Upload サイトは更新されません**。上記のビルドとアップロードが必要です。自動ビルドを使う場合は、Git 連携で別の Pages プロジェクトを作成し、本番ブランチ `main`、ビルドコマンド `npm run build`、出力先 `dist`、環境変数 `NODE_VERSION=24` を指定します。`VITE_BASE_PATH` は設定しません。既存の Direct Upload プロジェクトを Git 連携に変更することはできません。
+
+### GitHub Pages（任意の手動公開）
+
+`.github/workflows/pages.yml` は別の公開方法として残してあり、手動実行時のみ動作します。GitHub Actions が利用できる状態で、**Settings → Pages → Build and deployment → Source → GitHub Actions** を選び、**Actions → Deploy GitHub Pages (optional) → Run workflow** から `main` を指定してください。単体テスト、ビルド、公開を実行し、Vite にリポジトリのサブパスを渡します。現在の Cloudflare サイトはこのワークフローに依存しません。
+
+設定と履歴はドメインごとに保存され、自動同期されません。
+
+### ローカルでの確認
+
 ```powershell
 npm run build
 npm test
 npm run test:e2e
+node scripts/smoke-site.mjs https://apex-input-range.pages.dev/
 ```
+
+公開サイトのスモークテストは、隔離したブラウザーと模擬ゲームパッドでアセット、連続操作、配置、言語を確認します。プロキシが必要な環境では `SMOKE_PROXY` にアドレスを設定してください。
 
 ブラウザーテストはヘッドレスEdgeと標準ゲームパッドの模擬入力を使います。読み込み、配置変更、連続操作、同時押し、一時停止、表示形式、言語の保存、コピー失敗時の動作、モバイル表示を検証します。実機での接続確認の代わりにはなりません。
 

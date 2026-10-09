@@ -191,7 +191,7 @@ export default function App() {
             ['选择适合你的训练', '「改键专项」提高高频与改动动作的权重，并训练滑铲接换弹、跳跃接技能等动作组。可编辑顺序、连续动作比例和切题间隔。'],
             ['让练习形成反馈', '按错时题目保留，按对后自动切题。平均反应时间包含纠正错误的用时。按 Esc 或切出页面暂停；结束后可在训练记录查看各按键的表现。'],
           ].map(([title, body], i) => <section className="guide-card" key={title}><div><span className="state-icon"><Gamepad2 size={23}/></span><span className="guide-step">0{i + 1}</span></div><h2>{title}</h2><p>{body}</p>{i === 1 && <button className="text-button" onClick={() => navigate('bindings')}>键位对照<ArrowRight size={13}/></button>}</section>)}</div>
-          <section className="faq-card"><h2>手柄没有被识别？</h2><p>先在 Windows「设置 → 蓝牙和设备」中确认连接，再回到浏览器按下手柄按键。页面需要保持前台，并通过 localhost 打开。需要浏览器提供 standard 映射。如果不支持，可更新浏览器、改用 USB，或使用将设备输出为标准手柄的映射工具。DS4Windows / Steam Input 输出虚拟 Xbox 时，可在顶部手动选择 PS 按键显示。</p><p>Elite 背键通常表现为它所映射的普通按键，浏览器无法单独区分。Xbox / PS 系统键、触摸板、麦克风键与震动不参与训练。本版支持双键组合与连续动作组；暂不训练摇杆方向和长按时长。</p><p>暂时没有手柄时，可以在训练场的「手柄监视器」启用键盘体验。体验成绩不会计入手柄每日目标。</p></section>
+          <section className="faq-card"><h2>手柄没有被识别？</h2><p>先在 Windows「设置 → 蓝牙和设备」中确认连接，再回到浏览器按下手柄按键。页面需要保持前台，并通过 HTTPS 网站或本机 localhost 打开。需要浏览器提供 standard 映射。如果不支持，可更新浏览器、改用 USB，或使用将设备输出为标准手柄的映射工具。DS4Windows / Steam Input 输出虚拟 Xbox 时，可在顶部手动选择 PS 按键显示。</p><p>Elite 背键通常表现为它所映射的普通按键，浏览器无法单独区分。Xbox / PS 系统键、触摸板、麦克风键与震动不参与训练。本版支持双键组合与连续动作组；暂不训练摇杆方向和长按时长。</p><p>暂时没有手柄时，可以在训练场的「手柄监视器」启用键盘体验。体验成绩不会计入手柄每日目标。</p></section>
         </>}
         <footer className="page-footer"><span><span className="tiny-dot"/>专注输入，建立本能。</span><span>MADE FOR YOUR NEXT DROP.<span className="footer-square"/></span></footer>
       </main>

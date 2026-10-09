@@ -120,7 +120,7 @@ export function useTrainer(settings: Settings, demo: boolean, onFinish: (session
       try {
         if (!navigator.getGamepads) { if (!failed) setApiError('当前浏览器不支持 Gamepad API，请使用最新版 Chrome 或 Edge。'); failed = true; }
         else pads = Array.from(navigator.getGamepads());
-      } catch { if (!failed) setApiError('浏览器阻止了手柄访问，请在本机 localhost 页面中打开。'); failed = true; }
+      } catch { if (!failed) setApiError('浏览器阻止了手柄访问，请通过 HTTPS 网站或本机 localhost 打开。'); failed = true; }
       const connected = pads.filter((p): p is Gamepad => !!p?.connected);
       const pad = connected.find(p => p.index === deviceRef.current?.index) ?? connected.find(p => p.mapping === 'standard') ?? connected[0];
       const nextDevice = pad ? { id: pad.id, index: pad.index, standard: pad.mapping === 'standard', layout: detectControllerLayout(pad.id) } : null;

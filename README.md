@@ -6,6 +6,10 @@ React + TypeScript + Vite，通过浏览器 Gamepad API 读取 Xbox、DualShock 
 
 ## 启动
 
+**在线使用：https://apex-input-range.pages.dev/**
+
+无需安装，打开网址、连接手柄即可练习。首次使用请在「键位对照」导入自己的 Apex profile，内置键位只是示例。配置文件在浏览器内解析，每位用户的设置与记录保存在自己的浏览器中；localhost 的数据不会自动迁移到公开网站。
+
 需要 Node.js 22.6+（推荐 Node.js 24）。
 
 ```powershell
@@ -121,13 +125,52 @@ LS / RS 是摇杆按下。前后方案均可手动编辑，也支持手柄单键
 
 数据在当前浏览器、当前地址的 localStorage；清理浏览器数据或更换地址会影响记录。网络用于首次安装依赖和可选字体，字体失败时使用系统字体。
 
-## 验证
+## 公网部署
+
+### Cloudflare Pages（当前部署）
+
+当前使用 Cloudflare Pages **Direct Upload**，项目名为 `apex-input-range`。网站是纯静态资源，使用免费静态托管即可，无需 Functions、数据库或服务器。默认公网地址为 **https://apex-input-range.pages.dev/**。
+
+自定义域名 **https://apex.efastt.store/** 已在 Pages 中登记。在 Cloudflare 的 `efastt.store` → **DNS → 记录**中配置下表，等待 Pages → **Custom domains** 显示 Active 后即可使用；HTTPS 证书由 Cloudflare 自动签发。
+
+| 类型 | 名称 | 目标 | 代理状态 | TTL |
+| --- | --- | --- | --- | --- |
+| CNAME | `apex` | `apex-input-range.pages.dev` | 已代理（橙云） | 自动 |
+
+维护者首次部署需登录拥有该 Pages 项目的 Cloudflare 账号：
+
+```powershell
+npx wrangler@4.149.0 login --scopes account:read user:read pages:write
+```
+
+每次更新，在仓库根目录按顺序运行，前一步成功后再继续：
+
+```powershell
+npm ci
+npm test
+$env:VITE_BASE_PATH = '/'
+npm run build
+npx wrangler@4.149.0 pages deploy dist --project-name apex-input-range --branch main
+```
+
+推送 GitHub **不会自动更新当前 Direct Upload 网站**，需执行上面的构建和上传。若另建通过 Git 集成的 Pages 项目，可设置生产分支 `main`、构建命令 `npm run build`、输出目录 `dist`、环境变量 `NODE_VERSION=24`，不设置 `VITE_BASE_PATH`，由 Cloudflare 在推送后构建。现有 Direct Upload 项目不能直接切换成 Git 集成。
+
+### GitHub Pages（可选手动发布）
+
+仓库保留 `.github/workflows/pages.yml` 作为备用方案，仅手动触发，日常推送不运行。需要 GitHub Actions 可用，并在 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，再进入 **Actions → Deploy GitHub Pages (optional) → Run workflow**，选择 `main`。工作流运行单元测试、构建并发布，自动向 Vite 传入仓库子路径。当前在线站点使用 Cloudflare，不依赖此工作流。
+
+不同域名的浏览器设置和历史各自独立，不会自动同步。
+
+## 本地验证
 
 ```powershell
 npm run build
 npm test
 npm run test:e2e
+node scripts/smoke-site.mjs https://apex-input-range.pages.dev/
 ```
+
+公网冒烟检查使用隔离浏览器和模拟手柄，验证资源、连招、键位与语言；需要本地代理时，可通过 `SMOKE_PROXY` 环境变量指定代理地址。
 
 单元测试覆盖实际配置、解析边界、冲突、权重、连续出题、组合键、旧习惯和历史兼容。端到端测试使用本机 Edge 无头模式与模拟 Gamepad API，覆盖上传、手动旧键、暂停断线、组合键、持久化和移动布局，不操作日常浏览器里的训练记录。
 
