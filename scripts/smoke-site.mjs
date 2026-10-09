@@ -4,7 +4,12 @@ import { chromium } from '@playwright/test';
 const address = process.argv[2];
 if (!address) throw new Error('Usage: node scripts/smoke-site.mjs <site-url>');
 const base = new URL(address);
-const browser = await chromium.launch({ channel: process.platform === 'win32' ? 'msedge' : undefined, headless: true });
+const proxyServer = process.env.SMOKE_PROXY;
+const browser = await chromium.launch({
+  channel: process.platform === 'win32' ? 'msedge' : undefined,
+  headless: true,
+  ...(proxyServer ? { proxy: { server: proxyServer } } : {}),
+});
 try {
   const page = await browser.newPage();
   const errors = [];

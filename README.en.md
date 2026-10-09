@@ -2,11 +2,11 @@
 
 [中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-A local React, TypeScript and Vite app for adapting to new Apex controller bindings. Compare old and new layouts, practice frequent actions, and rehearse complete button sequences on one page. Supports Xbox, DualShock 4 and DualSense through the browser Gamepad API. No account or backend required.
+A React, TypeScript and Vite app for adapting to new Apex controller bindings, available online or locally. Compare old and new layouts, practice frequent actions, and rehearse complete button sequences on one page. Supports Xbox, DualShock 4 and DualSense through the browser Gamepad API. No account or backend required.
 
 ## Run
 
-Use the public site at **https://reloadggg.github.io/apex-input-range/** without installing anything. Connect your controller and import your own Apex profile in **Bindings**. The bundled layout is an example. Files are parsed locally; settings and history stay in each browser. Data from localhost does not automatically move to the public site.
+Use the public site at **https://apex-input-range.pages.dev/** without installing anything. Connect your controller and import your own Apex profile in **Bindings**. The bundled layout is an example. Files are parsed locally; settings and history stay in each browser. Data from localhost does not automatically move to the public site.
 
 Use Node.js 22.6 or later (Node.js 24 recommended).
 
@@ -89,13 +89,39 @@ Settings and history live in localStorage for the current browser and address. C
 
 ## Development and validation
 
-### Publish with GitHub Pages
+### Cloudflare Pages (current deployment)
 
-The workflow in `.github/workflows/pages.yml` builds and deploys `main` automatically. In **Settings → Pages → Build and deployment**, select **GitHub Actions**. Pull requests run unit tests and build checks without publishing. The workflow uses Node.js 24 and passes the Pages base path to Vite, so assets work under the repository subdirectory. Manual redeploys are available under **Actions → Deploy GitHub Pages → Run workflow**.
+The `apex-input-range` project uses Cloudflare Pages **Direct Upload** at **https://apex-input-range.pages.dev/**. Free static hosting is sufficient; the app needs no Functions, database or server.
 
-### Alternative: Cloudflare Pages
+The custom domain **https://apex.efastt.store/** is registered in Pages. Under `efastt.store` → **DNS → Records**, add the record below and wait for **Pages → Custom domains** to show Active. Cloudflare issues the HTTPS certificate automatically.
 
-In Cloudflare, open **Workers & Pages → Create application → Pages → Import an existing Git repository** and authorize `reloadggg/apex-input-range`. Use production branch `main`, build command `npm run build`, output directory `dist`, and environment variable `NODE_VERSION=24`. Keep the root directory at the repository root and leave `VITE_BASE_PATH` unset. Select **Save and Deploy** to receive an HTTPS `*.pages.dev` address. Future pushes to `main` rebuild the site automatically. This app uses static hosting only; no Functions, database, or custom domain is required.
+| Type | Name | Target | Proxy status | TTL |
+| --- | --- | --- | --- | --- |
+| CNAME | `apex` | `apex-input-range.pages.dev` | Proxied (orange cloud) | Auto |
+
+Maintainers should sign in to the Cloudflare account that owns the project before their first deployment:
+
+```powershell
+npx wrangler@4.149.0 login --scopes account:read user:read pages:write
+```
+
+For each update, run these commands from the repository root, continuing only after each command succeeds:
+
+```powershell
+npm ci
+npm test
+$env:VITE_BASE_PATH = '/'
+npm run build
+npx wrangler@4.149.0 pages deploy dist --project-name apex-input-range --branch main
+```
+
+Pushing to GitHub **does not update this Direct Upload site automatically**; build and upload with the commands above. For automatic builds, create a separate Pages project with Git integration: production branch `main`, build command `npm run build`, output directory `dist`, and `NODE_VERSION=24`. Leave `VITE_BASE_PATH` unset. An existing Direct Upload project cannot be switched to Git integration.
+
+### GitHub Pages (optional manual deployment)
+
+`.github/workflows/pages.yml` is retained as an alternative and runs only when triggered manually. With GitHub Actions available, select **Settings → Pages → Build and deployment → Source → GitHub Actions**, then **Actions → Deploy GitHub Pages (optional) → Run workflow**, choosing `main`. It runs unit tests, builds and deploys, and passes the repository base path to Vite. The current Cloudflare site does not depend on this workflow.
+
+Browser settings and history are separate for each domain and do not sync automatically.
 
 ### Local checks
 
@@ -103,7 +129,10 @@ In Cloudflare, open **Workers & Pages → Create application → Pages → Impor
 npm run build
 npm test
 npm run test:e2e
+node scripts/smoke-site.mjs https://apex-input-range.pages.dev/
 ```
+
+The public-site smoke check uses an isolated browser and simulated gamepad to verify assets, combos, bindings and languages. Set `SMOKE_PROXY` to a proxy address if your network requires one.
 
 Browser tests run headless Edge with simulated standard gamepads. They cover imports, remaps, combo progression, chords, pauses, controller labels, language persistence, clipboard fallback and mobile layouts. They do not replace physical-device testing.
 
