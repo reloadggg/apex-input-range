@@ -1,4 +1,4 @@
-import { bindingKeys, getTargets, QUICK_DRILLS, sameKeys } from './engine.ts';
+import { bindingKeys, getTargets, practiceDrills, sameKeys } from './engine.ts';
 import type { Binding, Settings, Target, Sequence, Attempt } from './engine.ts';
 
 export function compareBindings(before: Binding[], after: Binding[]) {
@@ -30,8 +30,7 @@ export function targetWeight(target: Target, settings: Settings): number {
 export function availableSequences(settings: Settings): Sequence[] {
   const targets = getTargets({ ...settings, mode: 'adapt' });
   const ids = new Set(targets.map(t => t.id));
-  const drill = QUICK_DRILLS.find(d => d.id === settings.drillId);
-  if (drill) return drill.actions.every(id => ids.has(id)) ? [drill] : [];
+  if (settings.drillId) return practiceDrills(settings);
   const sequences = settings.sequences.filter(s => s.enabled && s.actions.every(id => ids.has(id)));
   if (!settings.previousReady || !settings.boostChanged) return sequences;
   // Both directions are exercised, including three-way remaps, not just simple swaps.
@@ -55,7 +54,7 @@ export function nextTarget(settings: Settings, previous?: Target, random = Math.
   const sequences = settings.mode === 'adapt' ? availableSequences(settings) : [];
   if (sequences.length && (settings.drillId || random() * 100 < settings.sequenceShare)) {
     const alternatives = sequences.filter(s => s.id !== previous?.sequence?.id);
-    const selected = weighted(alternatives.length ? alternatives : sequences, s => s.weight * (settings.boostChanged && settings.previousReady && s.actions.some(id => targetWeight(targets.find(t => t.id === id)!, settings) > settings.weights[id]) ? 3 : 1), random)!;
+    const selected = weighted(alternatives.length ? alternatives : sequences, s => settings.drillId ? 1 : s.weight * (settings.boostChanged && settings.previousReady && s.actions.some(id => targetWeight(targets.find(t => t.id === id)!, settings) > settings.weights[id]) ? 3 : 1), random)!;
     const first = targets.find(t => t.id === selected.actions[0])!;
     return { ...first, action: selected.labels?.[0] || first.action, sequence: { id: selected.id, label: selected.label, actions: [...selected.actions], step: 0, delays: selected.delays, labels: selected.labels } };
   }
