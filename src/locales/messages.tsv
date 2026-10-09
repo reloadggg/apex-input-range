@@ -465,3 +465,69 @@ Language / 语言 / 言語	Language / 语言 / 言語	Language / 语言 / 言語
 应用到{{0}}方案	Apply to {{0}} profile	{{0}}の設定に適用
 已应用到{{0}}方案	Applied to {{0}} profile	{{0}}の設定に適用済み
 间隔 {{0}} 秒	Pause {{0}} s	間隔 {{0}}秒
+我的弱项	My weak spots	苦手な操作
+混合训练	Mixed practice	ミックス練習
+混合连招训练	Mixed combo practice	連続操作のミックス練習
+按你保存的顺序练习，整组完成后重新开始。可在上方「我的弱项 / 自定义」编辑动作与停顿。	Practice your saved sequence, then repeat the whole group. Edit actions and pauses under My weak spots / Custom above.	保存した順番で練習し、最後まで終えると繰り返します。上の「苦手な操作 / カスタム」で動作と待ち時間を編集できます。
+从 {{0}} 组中随机抽取，整组完成后切换。	Pick randomly from {{0}} groups and switch after each complete group.	{{0}}組からランダムに選び、最後まで終えてから次の組へ切り替えます。
+按键使用当前方案，不受随机专项的动作权重和连续比例影响。停用的动作不会出题。	Uses your current bindings, independently of remap weights and sequence share. Disabled actions are excluded.	現在のボタン配置を使い、配置変更の練習の重みや連続操作の割合には影響されません。無効な動作は出題しません。
+默认切题停顿	Default transition pause	既定の切り替え間隔
+已单独设置停顿的步骤使用自己的间隔。	Steps with their own pauses keep those intervals.	個別に待ち時間を設定したステップでは、その間隔を使います。
+自动加练依据改键前后的冲突，不依据训练成绩。自己的弱项可在首页「我的弱项 / 自定义」自由编排。	Automatic extra practice uses conflicts between old and new bindings, not session results. Build your own drills under My weak spots / Custom on the home page.	自動の追加練習は成績ではなく、新旧の配置の競合に基づきます。ホームの「苦手な操作 / カスタム」で自分の練習を作れます。
+请在上方勾选至少一组可用连招。	Select at least one available combo above.	上で利用可能な連続操作を1組以上選んでください。
+请在上方选择可用连招，并启用所需动作。	Choose an available combo above and enable its required actions.	上で利用可能な連続操作を選び、必要な動作を有効にしてください。
+我的弱项 / 自定义	My weak spots / Custom	苦手な操作 / カスタム
+勾选想混练的连招，每组等概率抽取，整组完成后再换一组；有多组时不连续重复同一组。也可以加入自己保存的弱项。	Choose combos to mix. Each group is equally likely, and the next starts only after the whole group is complete. With multiple groups, the same group never repeats immediately. You can also include your saved custom drills.	混ぜたい連続操作を選びます。各組を同じ確率で選び、最後まで終えてから次の組へ進みます。複数の組がある場合、同じ組を続けて出題しません。保存したカスタム練習も追加できます。
+已选 {{0}} 组 · {{1}} 组可用	{{0}} groups selected · {{1}} available	{{0}}組を選択 · {{1}}組が利用可能
+全选可用连招	Select all available	利用可能な組をすべて選択
+清空选择	Clear selection	選択を解除
+{{0}} 步	{{0}} steps	{{0}}ステップ
+本组或所需动作未启用	Group or required actions disabled	組または必要な動作が無効です
+在「我的弱项 / 自定义」保存动作组后，可加入混练。	Save a group under My weak spots / Custom to include it here.	「苦手な操作 / カスタム」で組を保存すると、ここに追加できます。
+已选：混合训练	Selected: Mixed practice	選択中：ミックス練習
+· 点击「开始训练」，随机抽取完整连招	· Select Start practice to draw complete combos at random	· 「練習開始」で連続操作を組ごとにランダム出題します
+请填写动作组名称。	Enter a sequence name.	シーケンス名を入力してください。
+最多保存 15 组，请先删除不需要的动作组。	You can save up to 15 sequences. Delete an unused one first.	保存できるのは 15 組までです。不要なシーケンスを削除してください。
+每组需要 2 至 12 个步骤。	Each sequence needs 2 to 12 steps.	各シーケンスには 2～12 ステップが必要です。
+请替换未启用的动作，或先在键位对照中设置按键。	Replace disabled actions, or set their buttons in Bindings first.	無効なアクションを変更するか、先に「キー配置」でボタンを設定してください。
+每一步的停顿需要在 0 至 1.5 秒之间。	Each pause must be between 0 and 1.5 seconds.	各ステップの間隔は 0～1.5 秒にしてください。
+已保存并选中，下方可预览，点击「开始训练」练习。	Saved and selected. Preview below, then click Start training to practice.	保存して選択しました。下のプレビューを確認し、「トレーニング開始」で練習できます。
+已保存。启用动作组后可开始练习。	Saved. Enable the sequence to start practicing.	保存しました。シーケンスを有効にすると練習できます。
+动作组已删除。	Sequence deleted.	シーケンスを削除しました。
+{{0}} / 15 组	{{0}} / 15 sequences	{{0}} / 15 組
+新建动作组	New sequence	シーケンスを作成
+这里由你手动编排，不会根据训练成绩自动生成。按键跟随当前键位；可在键位对照手动修改。	Arrange these sequences yourself; they are not generated from your scores. Buttons follow your current bindings, which you can edit in Bindings.	ここでは自分で手順を作成します。練習成績から自動生成されるものではありません。ボタンは現在のキー配置に従い、「キー配置」で手動変更できます。
+初始的 5 组是可编辑示例，不代表系统识别出的弱项。	The initial 5 sequences are editable examples, not detected weak spots.	最初の 5 組は編集可能なサンプルです。システムが判定した苦手な操作ではありません。
+启用后可单独练习，也可在「混合训练」中勾选。频率仅影响随机专项；混合训练中各组等概率抽取。	Enable a sequence to practice it individually or select it in Mixed training. Frequency only affects Random focus; Mixed training picks each selected sequence equally.	有効にすると単独で練習でき、「ミックス練習」でも選択できます。頻度はランダム重点練習にのみ反映され、ミックス練習では選択した各組が同じ確率で出題されます。
+训练进行中，结束后可编辑动作组。	Training is running. You can edit sequences after it ends.	トレーニング中です。終了後にシーケンスを編集できます。
+编辑动作组	Edit sequence	シーケンスを編集
+动作组名称	Sequence name	シーケンス名
+例如：技能后跳滑铲换弹	For example: ability, jump, slide, reload	例：スキル、ジャンプ、スライド、リロード
+启用动作组	Enable sequence	シーケンスを有効化
+随机专项频率	Random focus frequency	ランダム重点練習の頻度
+{{0}} / 12 步	{{0}} / 12 steps	{{0}} / 12 ステップ
+第 {{0}} 步动作	Step {{0}} action	ステップ {{0}} のアクション
+动作不可用	Action unavailable	アクションを使用できません
+（未启用）	 (disabled)	（無効）
+上移第 {{0}} 步	Move step {{0}} up	ステップ {{0}} を上へ
+下移第 {{0}} 步	Move step {{0}} down	ステップ {{0}} を下へ
+删除第 {{0}} 步	Delete step {{0}}	ステップ {{0}} を削除
+到下一步停顿	Pause before next step	次のステップまでの間隔
+第 {{0}} 步之后的停顿（秒）	Pause after step {{0}} (seconds)	ステップ {{0}} 後の間隔（秒）
+添加步骤	Add step	ステップを追加
+每组 2–12 步，停顿 0–1.5 秒。这里只练按键顺序与节奏。	Use 2–12 steps with pauses of 0–1.5 seconds. This practices button order and timing only.	各組は 2～12 ステップ、間隔は 0～1.5 秒です。ここではボタンの順序とリズムを練習します。
+保存并预览	Save and preview	保存してプレビュー
+取消编辑	Cancel editing	編集をキャンセル
+已选	Selected	選択中
+所需动作未启用，请先在键位对照中设置。	Required actions are disabled. Set them up in Bindings first.	必要なアクションが無効です。先に「キー配置」で設定してください。
+本组已停用，启用后可练习。	This sequence is disabled. Enable it to practice.	このシーケンスは無効です。有効にすると練習できます。
+{{0}}启用状态	Enable {{0}}	{{0}} の有効状態
+{{0}}随机专项频率	{{0}} random focus frequency	{{0}} のランダム重点練習の頻度
+已选中，下方可预览，点击「开始训练」练习。	Selected. Preview below, then click Start training to practice.	選択しました。下のプレビューを確認し、「トレーニング開始」で練習できます。
+练习	Practice	練習
+编辑{{0}}	Edit {{0}}	{{0}} を編集
+编辑	Edit	編集
+删除	Delete	削除
+删除此动作组？	Delete this sequence?	このシーケンスを削除しますか？
+确认删除	Confirm deletion	削除を確定
+还没有动作组，点击「新建动作组」录入你容易按错的顺序。	No sequences yet. Click New sequence to enter a button order you find difficult.	シーケンスがありません。「シーケンスを作成」から苦手な操作の順序を登録してください。

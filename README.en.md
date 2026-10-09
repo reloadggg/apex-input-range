@@ -6,7 +6,7 @@ A React, TypeScript and Vite app for adapting to new Apex controller bindings, a
 
 ## Run
 
-Use the public site at **https://apex-input-range.pages.dev/** without installing anything. Connect your controller and import your own Apex profile in **Bindings**. The bundled layout is an example. Files are parsed locally; settings and history stay in each browser. Data from localhost does not automatically move to the public site.
+Use the public site at **https://apex.efastt.store/** without installing anything ([alternative address](https://apex-input-range.pages.dev/)). Connect your controller and import your own Apex profile in **Bindings**. The bundled layout is an example. Files are parsed locally; settings and history stay in each browser. Data from localhost does not automatically move to the public site.
 
 Use Node.js 22.6 or later (Node.js 24 recommended).
 
@@ -59,13 +59,19 @@ USB or Bluetooth requires the browser's `standard` mapping. Manual label selecti
 
 ## Practice
 
-The home page has **11 combo drills**:
+The home page offers **Mixed practice**, **My weak spots / Custom**, and **11 built-in combo drills** in three categories:
 
 - Basics: slide jump, jump → reload, slide → reload, and the eight-step combat chain.
 - Combat chains: weapon swap → fire, crouch → reload → fire, slide jump → fire, and tactical/ultimate transitions.
 - Movement rehearsal: simplified wall bounce, bunny hop and zipline jump inputs, with community tutorial dates and chapter links.
 
 Select a drill to see its complete sequence and current buttons, then select **Start practice**. Follow the highlighted step. The eight-step chain is **Tactical → Jump → Slide → Fire → Crouch → Fire → Reload → Swap weapon**, with pauses of 0.2–0.45 seconds. Wait for the next highlight before pressing. Repeated jumps require release and a new press.
+
+**Mixed practice:** select groups from any category, including your saved custom sequences. All 11 built-in groups are selected initially. Each group has the same chance of being drawn; a group finishes before the next starts, and multiple available groups never repeat immediately. The selection persists. An empty selection cannot start; disabled groups, disabled actions and sprint sequences are excluded. Remap weights and sequence share do not affect this mode.
+
+**My weak spots / Custom:** choose **New sequence**, enter a name, add or remove steps, move them up or down, and set pauses between steps (0–1.5 seconds). Save up to 15 groups of 2–12 steps. **Save and preview** selects the group for repeated practice; select **Start practice** below. Saved groups can also be checked in Mixed practice. Changes stay in your browser.
+
+The initial five editable groups are examples, **not weaknesses inferred from your results**. Automatic conflict groups compare old and new bindings: if the old jump button now triggers Tactical, the trainer creates Jump → Tactical → Jump. History records performance without changing bindings or generating personal weak spots. Custom steps use your current action bindings; enter them manually in **Bindings** if you have no configuration file. A custom group's remap-practice frequency affects only random remap practice; mixed groups remain equally likely.
 
 These drills rehearse button order. They do not simulate terrain, movement, landing, sustained crouching, weapon animations or ability cooldowns. Practice the full technique in-game. See [research notes](docs/combo-research.md) for community sources and their scope.
 
@@ -93,7 +99,7 @@ Settings and history live in localStorage for the current browser and address. C
 
 The `apex-input-range` project uses Cloudflare Pages **Direct Upload** at **https://apex-input-range.pages.dev/**. Free static hosting is sufficient; the app needs no Functions, database or server.
 
-The custom domain **https://apex.efastt.store/** is registered in Pages. Under `efastt.store` → **DNS → Records**, add the record below and wait for **Pages → Custom domains** to show Active. Cloudflare issues the HTTPS certificate automatically.
+The custom domain **https://apex.efastt.store/** is active. Its configuration under `efastt.store` → **DNS → Records** is shown below. Cloudflare issues and renews its HTTPS certificate automatically.
 
 | Type | Name | Target | Proxy status | TTL |
 | --- | --- | --- | --- | --- |
@@ -129,7 +135,7 @@ Browser settings and history are separate for each domain and do not sync automa
 npm run build
 npm test
 npm run test:e2e
-node scripts/smoke-site.mjs https://apex-input-range.pages.dev/
+node scripts/smoke-site.mjs https://apex.efastt.store/
 ```
 
 The public-site smoke check uses an isolated browser and simulated gamepad to verify assets, combos, bindings and languages. Set `SMOKE_PROXY` to a proxy address if your network requires one.

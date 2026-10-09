@@ -30,6 +30,15 @@ try {
   const iconUrl = new URL(icon, address);
   assert.ok(iconUrl.pathname.startsWith(base.pathname), 'Favicon must use the deployment base path');
   assert.equal((await page.request.get(iconUrl.href)).status(), 200);
+  await page.getByRole('button', { name: '混合训练', exact: true }).click();
+  assert.equal(await page.locator('.mixed-grid input:checked').count(), 11);
+  await page.getByRole('button', { name: '我的弱项 / 自定义', exact: true }).click();
+  await page.getByRole('button', { name: '新建动作组', exact: true }).click();
+  await page.getByLabel('动作组名称', { exact: true }).fill('Smoke combo');
+  await page.getByRole('button', { name: '保存并预览', exact: true }).click();
+  assert.equal(await page.locator('.combo-heading strong').innerText(), 'Smoke combo');
+  assert.deepEqual(await page.locator('.combo-step-keys').allTextContents(), ['RB', 'X']);
+  await page.getByRole('button', { name: /常用基础/ }).click();
   await page.getByRole('button', { name: '练习实战串练', exact: true }).click();
   assert.equal(await page.locator('.combo-steps li').count(), 8);
   await page.getByLabel('Language / 语言 / 言語').selectOption('en');
@@ -46,7 +55,7 @@ try {
   await page.getByLabel('Language / 语言 / 言語').selectOption('ja');
   assert.equal(await page.locator('html').getAttribute('lang'), 'ja');
   assert.deepEqual(errors, []);
-  console.log(`PASS ${address}: assets, controller input, combos, bindings and languages`);
+  console.log(`PASS ${address}: assets, controller input, mixed/custom combos, bindings and languages`);
 } finally {
   await browser.close();
 }

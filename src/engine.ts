@@ -27,7 +27,7 @@ export type DrillCategory = 'basic' | 'combat' | 'movement';
 export type QuickDrill = Sequence & { category: DrillCategory; description: string; note: string; source?: { author: string; date: string; chapter: string; url: string } };
 export type Settings = { mode: Mode; duration: number; selected: number[]; sound: boolean; hint: boolean; bindings: Binding[]; controllerLayout: ControllerPreference;
   previousBindings: Binding[]; previousReady: boolean; currentSource: string; previousSource: string;
-  weights: Record<string, number>; sequences: Sequence[]; sequenceShare: number; transitionMs: number; boostChanged: boolean; schemaVersion: number; drillId: string | null; providedRevision: string;
+  weights: Record<string, number>; sequences: Sequence[]; sequenceShare: number; transitionMs: number; boostChanged: boolean; schemaVersion: number; drillId: string | null; mixedDrillIds: string[]; providedRevision: string;
 };
 export type Target = { id: string; button: number; action: string; chord?: number[]; sequence?: { id: string; label: string; actions: string[]; step: number; delays?: number[]; labels?: string[] } };
 export type Attempt = { button: number; target: number; correct: boolean; reaction: number; action: string;
@@ -97,6 +97,27 @@ export function drillDelayLabel(drill: Sequence): string {
   return min === max ? `${min} 秒停顿` : `${min}–${max} 秒停顿`;
 }
 
+export const MIXED_DRILL_ID = 'mixed';
+export function customDrillId(id: string): string { return `custom:${id}`; }
+export function findDrill(settings: Pick<Settings, 'sequences' | 'drillId'>, id = settings.drillId): Sequence | undefined {
+  if (!id) return undefined;
+  if (id.startsWith('custom:')) {
+    const sequence = settings.sequences.find(s => customDrillId(s.id) === id);
+    return sequence ? { ...sequence, id } : undefined;
+  }
+  return QUICK_DRILLS.find(d => d.id === id);
+}
+export function canPracticeSequence(sequence: Sequence, settings: Pick<Settings, 'bindings'>): boolean {
+  return sequence.enabled && sequence.actions.length >= 2 && sequence.actions.every(id => id !== 'sprint' && settings.bindings.some(b => b.id === id && b.enabled !== false));
+}
+export function practiceDrills(settings: Settings): Sequence[] {
+  const refs = settings.drillId === MIXED_DRILL_ID ? settings.mixedDrillIds : settings.drillId ? [settings.drillId] : [];
+  return [...new Set(refs)].flatMap(id => {
+    const drill = findDrill(settings, id);
+    return drill && canPracticeSequence(drill, settings) ? [drill] : [];
+  });
+}
+
 export function bindingKeys(binding: { button: number; chord?: number[]; enabled?: boolean }): number[] {
   return binding.enabled === false ? [] : binding.chord?.length ? [...binding.chord].sort((a, b) => a - b) : [binding.button];
 }
@@ -110,7 +131,7 @@ export const DEFAULT_SETTINGS: Settings = {
   previousBindings: DEFAULT_BINDINGS, previousReady: false, currentSource: '默认参考布局', previousSource: '尚未设置',
   weights: Object.fromEntries(DEFAULT_BINDINGS.map(b => [b.id, b.id === 'sprint' ? 0 : ['jump', 'crouch', 'interact', 'tactical', 'ultimate'].includes(b.id) ? 5 : 1])),
   sequences: DEFAULT_SEQUENCES, sequenceShare: 80, transitionMs: 120, boostChanged: true, schemaVersion: 2,
-  drillId: null, providedRevision: '',
+  drillId: null, mixedDrillIds: QUICK_DRILLS.map(d => d.id), providedRevision: '',
 };
 
 export function normalizeBindings(value: unknown): Binding[] {
@@ -124,7 +145,7 @@ export function normalizeBindings(value: unknown): Binding[] {
 
 export function normalizeSettings(value: unknown): Settings {
   const data = value && typeof value === 'object' ? value as Partial<Settings> : {};
-  return {
+  const normalized: Settings = {
     mode: data.mode === 'action' || data.mode === 'adapt' ? data.mode : 'button',
     duration: [0, 30, 60, 120].includes(data.duration!) ? data.duration! : 60,
     selected: Array.isArray(data.selected) ? [...new Set(data.selected.filter(x => Number.isInteger(x) && x >= 0 && x < 16))] : [...DEFAULT_SETTINGS.selected],
@@ -139,17 +160,20 @@ export function normalizeSettings(value: unknown): Settings {
     sequenceShare: [0, 50, 80, 100].includes(data.sequenceShare!) ? data.sequenceShare! : 80,
     transitionMs: [0, 120, 240].includes(data.transitionMs!) ? data.transitionMs! : 120,
     boostChanged: data.boostChanged !== false, schemaVersion: 2,
-    drillId: QUICK_DRILLS.some(d => d.id === data.drillId) ? data.drillId! : null,
+    drillId: typeof data.drillId === 'string' ? data.drillId : null,
+    mixedDrillIds: Array.isArray(data.mixedDrillIds) ? [...new Set(data.mixedDrillIds.filter(id => typeof id === 'string'))] : QUICK_DRILLS.map(d => d.id),
     providedRevision: typeof data.providedRevision === 'string' ? data.providedRevision : '',
   };
+  if (normalized.drillId !== MIXED_DRILL_ID && !findDrill(normalized)) normalized.drillId = null;
+  normalized.mixedDrillIds = normalized.mixedDrillIds.filter(id => !!findDrill(normalized, id));
+  return normalized;
 }
 
 export function getTargets(settings: Settings): Target[] {
-  const drill = settings.mode === 'adapt' ? QUICK_DRILLS.find(d => d.id === settings.drillId) : undefined;
-  if (drill && !drill.actions.every(id => id !== 'sprint' && settings.bindings.some(b => b.id === id && b.enabled !== false))) return [];
+  const drillActions = settings.mode === 'adapt' && settings.drillId ? new Set(practiceDrills(settings).flatMap(d => d.actions)) : undefined;
   return settings.mode === 'button'
     ? BUTTONS.filter(b => settings.selected.includes(b.id)).map(b => ({ id: String(b.id), button: b.id, action: controllerLabels(resolveControllerLayout(settings.controllerLayout)).buttonName(b.id) }))
-    : settings.bindings.filter(b => b.id !== 'sprint' && b.enabled !== false && (drill ? drill.actions.includes(b.id) : settings.mode === 'adapt' ? settings.weights[b.id] > 0 : bindingKeys(b).every(k => settings.selected.includes(k)))).map(b => ({ id: b.id, button: b.button, action: b.action, chord: b.chord }));
+    : settings.bindings.filter(b => b.id !== 'sprint' && b.enabled !== false && (drillActions ? drillActions.has(b.id) : settings.mode === 'adapt' ? settings.weights[b.id] > 0 : bindingKeys(b).every(k => settings.selected.includes(k)))).map(b => ({ id: b.id, button: b.button, action: b.action, chord: b.chord }));
 }
 
 export function chooseTarget(targets: Target[], previous?: Target, random = Math.random): Target | undefined {

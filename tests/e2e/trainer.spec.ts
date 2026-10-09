@@ -36,6 +36,88 @@ async function start(page: Page) {
   await expect(page.locator('.countdown-number')).toHaveCount(0);
 }
 
+test('mixed picker persists its pool and changes groups only after complete gamepad sequences', async ({ page }) => {
+  await page.addInitScript(() => { Math.random = () => 0; });
+  await boot(page);
+  await page.getByRole('button', { name: '混合训练', exact: true }).click();
+  await page.getByRole('button', { name: '清空选择', exact: true }).click();
+  await expect(page.getByRole('button', { name: '开始训练', exact: true })).toBeDisabled();
+  await page.locator('.mixed-grid').getByRole('checkbox', { name: /^滑铲跳\s*2/ }).check();
+  await page.locator('.mixed-grid').getByRole('checkbox', { name: /^切枪补枪/ }).check();
+  await page.reload(); await page.clock.runFor(50);
+  await expect(page.locator('.mixed-grid input:checked')).toHaveCount(2);
+  await start(page);
+  await expect(page.locator('.combo-heading strong')).toHaveText('滑铲跳');
+  await expect(page.getByRole('button', { name: '清空选择', exact: true })).toBeDisabled();
+  await press(page, [2]);
+  await expect(page.locator('.sequence-current h2')).toHaveText('滑铲');
+  await press(page, [5]); await page.clock.runFor(160);
+  await expect(page.locator('.sequence-current h2')).toHaveText('跳跃');
+  await press(page, [4]); await page.clock.runFor(160);
+  await expect(page.locator('.combo-heading strong')).toHaveText('切枪补枪');
+  for (const key of [7, 11, 7]) { await press(page, [key]); await page.clock.runFor(340); }
+  await expect(page.locator('.combo-heading strong')).toHaveText('滑铲跳');
+});
+
+test('manual weak spot editor saves reordered steps and delays, practices, and joins mixed selection', async ({ page }) => {
+  await boot(page);
+  await page.getByRole('button', { name: '我的弱项 / 自定义', exact: true }).click();
+  await page.getByRole('button', { name: '新建动作组', exact: true }).click();
+  await page.getByLabel('动作组名称', { exact: true }).fill('我的起手组合');
+  await page.getByLabel('第 1 步动作', { exact: true }).selectOption('tactical');
+  await page.getByLabel('第 2 步动作', { exact: true }).selectOption('jump');
+  await page.getByRole('button', { name: '添加步骤', exact: true }).click();
+  await page.getByLabel('第 3 步动作', { exact: true }).selectOption('crouch');
+  await page.getByRole('button', { name: '添加步骤', exact: true }).click();
+  await page.getByLabel('第 4 步动作', { exact: true }).selectOption('fire');
+  await page.getByRole('button', { name: '上移第 4 步', exact: true }).click();
+  await expect(page.getByLabel('第 3 步动作', { exact: true })).toHaveValue('fire');
+  await page.getByRole('button', { name: '删除第 4 步', exact: true }).click();
+  await page.getByLabel('第 1 步之后的停顿（秒）', { exact: true }).fill('1.6');
+  await page.getByRole('button', { name: '保存并预览', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('0 至 1.5');
+  await page.getByLabel('第 1 步之后的停顿（秒）', { exact: true }).fill('0.6');
+  await page.getByLabel('第 2 步之后的停顿（秒）', { exact: true }).fill('0.25');
+  await page.getByRole('button', { name: '保存并预览', exact: true }).click();
+  await expect(page.locator('.combo-step-keys')).toHaveText(['LS', 'LB', 'RT']);
+  await page.reload(); await page.clock.runFor(50);
+  await expect(page.locator('.combo-heading strong')).toHaveText('我的起手组合');
+  await start(page);
+  await press(page, [10]); await page.clock.runFor(200);
+  await expect(page.locator('.sequence-current h2')).toHaveText('战术技能');
+  await press(page, [4]);
+  await page.clock.runFor(400);
+  await expect(page.locator('.sequence-current h2')).toHaveText('跳跃');
+  await expect(page.locator('.metric').first()).toContainText('1 次正确 / 1 次输入');
+  await page.getByRole('button', { name: '结束', exact: true }).click();
+  await page.getByRole('button', { name: '练习我的起手组合', exact: true }).click();
+  await expect(page.locator('.combo-heading strong')).toHaveText('我的起手组合');
+  await expect(page.getByRole('button', { name: '开始训练', exact: true })).toBeEnabled();
+  await page.getByRole('button', { name: '混合训练', exact: true }).click();
+  await page.getByRole('button', { name: '清空选择', exact: true }).click();
+  await page.locator('.mixed-grid').getByRole('checkbox', { name: /^我的起手组合/ }).check();
+  await page.getByRole('button', { name: '我的弱项 / 自定义', exact: true }).click();
+  await page.getByRole('button', { name: '删除我的起手组合', exact: true }).click();
+  await page.getByRole('button', { name: '确认删除', exact: true }).click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('input-range-settings')!).mixedDrillIds)).toEqual([]);
+  await expect(page.getByRole('button', { name: '开始训练', exact: true })).toBeDisabled();
+});
+
+test('mixed and custom panels fit mobile in English and Japanese', async ({ page }) => {
+  await boot(page);
+  for (const language of ['en', 'ja']) {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.getByLabel('Language / 语言 / 言語').selectOption(language);
+    await page.getByRole('button', { name: language === 'en' ? 'Mixed practice' : 'ミックス練習', exact: true }).click();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    await page.getByRole('button', { name: language === 'en' ? 'My weak spots / Custom' : '苦手な操作 / カスタム', exact: true }).click();
+    await page.getByRole('button', { name: language === 'en' ? 'New sequence' : 'シーケンスを作成', exact: true }).click();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+    await page.screenshot({ path: `test-results/custom-${language}-mobile.png`, fullPage: true });
+    await page.getByRole('button', { name: language === 'en' ? 'Cancel editing' : '編集をキャンセル', exact: true }).click();
+  }
+});
+
 test('provided profiles seed new defaults, comparison and mobile layout', async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   await page.goto('/');
