@@ -1,151 +1,128 @@
-# Input Range · Apex Controller Practice
+# Input Range
 
-[中文](README.md) · [English](README.en.md) · [日本語](README.ja.md)
+**Apex controller remap and combo trainer**
 
-[Source on GitHub](https://github.com/reloadggg/apex-input-range) · [MIT License](LICENSE)
+[Try it online](https://apex.efastt.store/) · [GitHub](https://github.com/reloadggg/apex-input-range) · [MIT License](LICENSE)
 
-A React, TypeScript and Vite app for adapting to new Apex controller bindings, available online or locally. Compare old and new layouts, practice frequent actions, and rehearse complete button sequences on one page. Supports Xbox, DualShock 4 and DualSense through the browser Gamepad API. No account or backend required.
+[中文](README.md) · **English** · [日本語](README.ja.md)
 
-## License
+New bindings take time to become familiar. Input Range turns actions such as jumping, sliding, reloading and using abilities into browser-based button drills, helping you learn a new layout and connect those actions into sequences.
 
-Released under the [MIT License](LICENSE). Copyright (c) 2026 reloadggg. Use, modification, redistribution and commercial use are permitted with the copyright and permission notices retained. The software is provided as is, without warranty.
+Supports **Xbox, DualShock 4 (PS4) and DualSense (PS5)**, with Chinese, English and Japanese interfaces. No installation or account required.
 
-## Run
+## Features
 
-Use the public site at **https://apex.efastt.store/** without installing anything ([alternative address](https://apex-input-range.pages.dev/)). Connect your controller and import your own Apex profile in **Bindings**. The bundled layout is an example. Files are parsed locally; settings and history stay in each browser. Data from localhost does not automatically move to the public site.
+- **Import and compare bindings:** read Apex configuration files, compare old and new layouts, or enter bindings manually.
+- **Remap practice:** emphasize frequent actions, changed bindings and old-button conflicts.
+- **11 built-in combos:** basics, combat chains and simplified movement inputs, with complete steps on one page.
+- **Mixed practice:** select combos across categories and switch randomly after each complete group.
+- **My weak spots / Custom:** arrange your own steps and pauses, then practice them alone or in a mix.
+- **Practice history:** review accuracy, reaction time, old-binding mistakes and action transitions; export JSON.
 
-Use Node.js 22.6 or later (Node.js 24 recommended).
+## Get started
 
-```powershell
-npm install
-npm run dev
+1. Open **[apex.efastt.store](https://apex.efastt.store/)** in Chrome or Edge.
+2. Connect your controller over USB or Bluetooth. Keep the page in the foreground and press a controller button to activate detection.
+3. Open **Bindings** and import your configuration or enter your current bindings manually. **The bundled layout is an example; replace it with your own.**
+4. Return to Practice, choose a combo or mode, and select **Start practice**.
+
+Without a controller, try the keyboard demo in the controller monitor. Demo results are labeled separately and do not count toward the daily controller goal.
+
+## Import Apex bindings
+
+On Windows, press **Win + R**, paste this path and press Enter:
+
+```text
+%userprofile%\Saved Games\Respawn\Apex\profile
 ```
 
-Open **http://127.0.0.1:5173** in Chrome or Edge. On Windows, you can also double-click `启动训练器.cmd`. Connect your controller, keep the page in the foreground, and press any controller button to let the browser detect it.
+Drop `profile.cfg` into **After**. If you saved a configuration before remapping, such as `profile_backup.cfg`, import it into **Before**. Without a backup, enter your old bindings manually. Review the preview and warnings before applying.
 
-The menu at the top right switches between **中文 / English / 日本語**. Your choice is saved locally. Switching language preserves bindings, session progress and history.
-
-## Import your Apex configuration
-
-Open **Bindings**. The guide at the top includes selectable paths and copy buttons.
-
-1. Copy the profile path below. Press **Win + R**, paste it and press Enter, or use the File Explorer address bar.
-   ```text
-   %userprofile%\Saved Games\Respawn\Apex\profile
-   ```
-2. Drop `profile.cfg` into the **After** panel. If you saved an old `profile_backup.cfg`, drop it into **Before**. If you have no backup, enter the old buttons manually. A backup must have been saved before changing your layout.
-3. Review the detected bindings and warnings, then click **Apply to Before/After profile**. Importing affects only this trainer.
-
-For optional `settings.cfg` and `settings_backup.cfg` files, expand the additional-settings guide and open:
+Optional `settings.cfg` and `settings_backup.cfg` files are in:
 
 ```text
 %userprofile%\Saved Games\Respawn\Apex\local
 ```
 
-If the browser blocks clipboard access, the path is selected automatically; press **Ctrl + C**. The web page cannot scan your local directory automatically. Files are parsed in your browser and are not uploaded or executed.
+Custom layouts usually require `profile.cfg`; `settings.cfg` alone may contain only button slots. Standard layouts, custom layouts and recognized direct bindings are supported. Unsupported or incomplete configurations show warnings, and unresolved actions keep their existing settings. Import again after changing bindings in Apex.
 
-In custom layouts, `settings.cfg` often contains only `+ability` slots. The active permutation comes from `profile.cfg`: `gamepad_custom_pilot`, enabled by `gamepad_button_layout`. Import the matching profile as well. Supported layouts are standard `0`, custom `6`, and recognized direct bindings. Unsupported layouts, southpaw options or incomplete data produce warnings; unresolved actions retain their existing settings. Held bindings are ignored. Ultimate is derived from **Tactical + Ping** and can be edited manually.
+Both layouts support manual editing and single-button capture from the controller. Ultimate defaults to **Tactical + Ping** and can be edited as a single button or two-button chord.
 
-The bundled sanitized snapshot seeds the initial Before/After layouts. Use the snapshot restore button to restore it; it does not read your live game files. Import again after changing Apex bindings.
+## Practice options
 
-## Controllers
+### Combos and mixed practice
 
-**Controller labels** detects Xbox / DS4 / DualSense automatically and offers a manual choice. If DS4Windows or Steam Input presents a virtual Xbox controller, choose your PS labels manually. This changes labels and the diagram, while keeping the same action bindings. History keeps the controller labels used during each session.
-
-| Xbox | DS4 / DualSense |
+| Category | Built-in drills |
 | --- | --- |
-| A / B / X / Y | × / ○ / □ / △ |
-| LB / RB | L1 / R1 |
-| LT / RT | L2 / R2 |
-| LS / RS | L3 / R3 (stick clicks) |
-| View | Share / Create |
-| Menu | Options |
+| Basics | Slide jump, jump → reload, slide → reload, combat chain |
+| Combat chains | Weapon swap → fire, crouch → reload → fire, slide jump → fire, tactical/ultimate transitions |
+| Movement rehearsal | Simplified wall bounce, bunny hop and zipline jump inputs |
 
-USB or Bluetooth requires the browser's `standard` mapping. Manual label selection does not enable unsupported raw input. System buttons, touchpad, microphone, vibration and adaptive trigger effects are outside the drills. Rear buttons are seen as the regular buttons they map to.
+Select a group to preview every action and its current binding. Follow the highlighted step and wait for the next highlight before pressing. Repeated buttons require release and a new press.
 
-## Practice
+The combat chain, for example, is:
 
-The home page offers **Mixed practice**, **My weak spots / Custom**, and **11 built-in combo drills** in three categories:
+**Tactical → Jump → Slide → Fire → Crouch → Fire → Reload → Swap weapon**
 
-- Basics: slide jump, jump → reload, slide → reload, and the eight-step combat chain.
-- Combat chains: weapon swap → fire, crouch → reload → fire, slide jump → fire, and tactical/ultimate transitions.
-- Movement rehearsal: simplified wall bounce, bunny hop and zipline jump inputs, with community tutorial dates and chapter links.
+In **Mixed practice**, select built-in combos and saved custom groups. Each group is equally likely, and a group finishes before the next starts. With multiple available groups, the same group never repeats immediately. Disabled groups and groups containing disabled actions are excluded.
 
-Select a drill to see its complete sequence and current buttons, then select **Start practice**. Follow the highlighted step. The eight-step chain is **Tactical → Jump → Slide → Fire → Crouch → Fire → Reload → Swap weapon**, with pauses of 0.2–0.45 seconds. Wait for the next highlight before pressing. Repeated jumps require release and a new press.
+### My weak spots / Custom
 
-**Mixed practice:** select groups from any category, including your saved custom sequences. All 11 built-in groups are selected initially. Each group has the same chance of being drawn; a group finishes before the next starts, and multiple available groups never repeat immediately. The selection persists. An empty selection cannot start; disabled groups, disabled actions and sprint sequences are excluded. Remap weights and sequence share do not affect this mode.
+Open **My weak spots / Custom → New sequence**, enter a name and choose each action. Add, remove or reorder steps and set pauses of **0–1.5 seconds**. Save up to **15 groups**, with **2–12 steps** each.
 
-**My weak spots / Custom:** choose **New sequence**, enter a name, add or remove steps, move them up or down, and set pauses between steps (0–1.5 seconds). Save up to 15 groups of 2–12 steps. **Save and preview** selects the group for repeated practice; select **Start practice** below. Saved groups can also be checked in Mixed practice. Changes stay in your browser.
+Select **Save and preview**, then start repeated practice, or include the group in Mixed practice. Every step uses your current action bindings.
 
-The initial five editable groups are examples, **not weaknesses inferred from your results**. Automatic conflict groups compare old and new bindings: if the old jump button now triggers Tactical, the trainer creates Jump → Tactical → Jump. History records performance without changing bindings or generating personal weak spots. Custom steps use your current action bindings; enter them manually in **Bindings** if you have no configuration file. A custom group's remap-practice frequency affects only random remap practice; mixed groups remain equally likely.
+The initial five groups are editable examples. You define your own weak spots; automatically generated drills use **conflicts between old and new bindings**. If the old jump button now triggers Tactical, the trainer creates Jump → Tactical → Jump. Results do not automatically change bindings or generate personal weak-spot groups.
 
-These drills rehearse button order. They do not simulate terrain, movement, landing, sustained crouching, weapon animations or ability cooldowns. Practice the full technique in-game. See [research notes](docs/combo-research.md) for community sources and their scope.
+### Individual actions and remap practice
 
-- **Button recognition:** find the physical button shown.
-- **Action memory:** press your current binding for the named action; hints are optional.
-- **Remap practice:** emphasize frequent actions and changed bindings. Frequency weights are 0 / 1 / 3 / 5, with an optional ×3 boost for remapped actions. Old-button conflicts generate return sequences automatically.
+| Mode | What you practice |
+| --- | --- |
+| Button recognition | Find the physical button shown |
+| Action memory | Press your current binding for a named action, with optional hints |
+| Remap practice | Mix individual actions, sequences and old-binding conflicts at your chosen frequencies |
 
-Auto-sprint is assumed: **sprint is excluded from action and combo practice**, including old saved sequences. Its real binding remains in the comparison, and the physical button can still appear in button-recognition mode.
+Remap practice lets you adjust action frequencies and give changed bindings extra practice. Custom-group frequency affects random remap practice only; mixed combos remain equally likely.
 
-Expand the sequence settings to edit actions, weights, enabled status and pauses. The default 80% sequence share is the probability of choosing a sequence, not the fraction of all button presses. Fixed drills ignore the random weighting.
+Auto-sprint is assumed: **sprint is excluded from action and combo practice**, while its binding remains in the comparison.
 
-## Input and results
+## Controllers and practice behavior
 
-Only new presses count. Holding a button does not repeat it; analog triggers use 0.55 press and 0.35 release thresholds. Two-button chords require overlapping holds. A partial chord waits without scoring; an unrelated new press is a mistake.
+- Xbox, DS4 and DualSense require the browser's `standard` mapping. If DS4Windows or Steam Input outputs a virtual Xbox controller, choose PS labels manually.
+- Only new presses count; holding a button does not repeat it. Two-button chords require overlapping holds.
+- Mistakes keep the prompt; correct inputs advance. Choose 30 / 60 / 120 seconds or unlimited practice. Esc, focus loss or controller disconnection pauses the session.
+- Rear buttons are detected as the regular buttons they map to. Stick directions, system buttons, touchpad, vibration and adaptive trigger effects are outside the drills.
+- Combos rehearse button order and rhythm, without simulating terrain, movement, weapon animations or ability cooldowns. Practice full movement techniques in-game; see the [combo research notes](docs/combo-research.md).
 
-Mistakes keep the prompt. Reaction time includes corrections and excludes pauses. Choose 30 / 60 / 120 seconds or unlimited practice. Esc, focus loss or controller disconnection pauses the session. History keeps the latest 50 sessions, including old-binding errors and sequence transitions, and exports JSON.
+## Data and privacy
 
-Keyboard demo is available in the controller monitor. A/B/X/Y use the same letters, LB/RB use Q/E, LT/RT use 1/3, LS/RS use F/J, D-pad uses arrow keys, and View/Menu use V/M. Demo sessions are labeled separately and do not count toward the daily controller target.
+Configuration files are parsed in your browser. They are not uploaded, executed or modified. You choose files explicitly; the page cannot scan your game directory and never sends inputs to the game.
 
-Settings and history live in localStorage for the current browser and address. Clearing browser data or changing the address affects persistence. Optional remote fonts fall back to system fonts. The trainer never sends inputs to the game.
+Settings, custom groups and the latest 50 sessions stay in the current browser. Clearing browser data or changing browsers or site addresses does not transfer that data automatically. Export JSON from History to keep a copy of your results.
 
-## Development and validation
+## Local development
 
-### Cloudflare Pages (current deployment)
+Built with React, TypeScript, Vite and the browser Gamepad API, without a backend. Requires **Node.js 22.6+**; **Node.js 24** is recommended.
 
-The `apex-input-range` project uses Cloudflare Pages **Direct Upload** at **https://apex-input-range.pages.dev/**. Free static hosting is sufficient; the app needs no Functions, database or server.
-
-The custom domain **https://apex.efastt.store/** is active. Its configuration under `efastt.store` → **DNS → Records** is shown below. Cloudflare issues and renews its HTTPS certificate automatically.
-
-| Type | Name | Target | Proxy status | TTL |
-| --- | --- | --- | --- | --- |
-| CNAME | `apex` | `apex-input-range.pages.dev` | Proxied (orange cloud) | Auto |
-
-Maintainers should sign in to the Cloudflare account that owns the project before their first deployment:
-
-```powershell
-npx wrangler@4.149.0 login --scopes account:read user:read pages:write
-```
-
-For each update, run these commands from the repository root, continuing only after each command succeeds:
-
-```powershell
+```bash
+git clone https://github.com/reloadggg/apex-input-range.git
+cd apex-input-range
 npm ci
-npm test
-$env:VITE_BASE_PATH = '/'
-npm run build
-npx wrangler@4.149.0 pages deploy dist --project-name apex-input-range --branch main
+npm run dev
 ```
 
-Pushing to GitHub **does not update this Direct Upload site automatically**; build and upload with the commands above. For automatic builds, create a separate Pages project with Git integration: production branch `main`, build command `npm run build`, output directory `dist`, and `NODE_VERSION=24`. Leave `VITE_BASE_PATH` unset. An existing Direct Upload project cannot be switched to Git integration.
+Open **http://127.0.0.1:5173**.
 
-### GitHub Pages (optional manual deployment)
-
-`.github/workflows/pages.yml` is retained as an alternative and runs only when triggered manually. With GitHub Actions available, select **Settings → Pages → Build and deployment → Source → GitHub Actions**, then **Actions → Deploy GitHub Pages (optional) → Run workflow**, choosing `main`. It runs unit tests, builds and deploys, and passes the repository base path to Vite. The current Cloudflare site does not depend on this workflow.
-
-Browser settings and history are separate for each domain and do not sync automatically.
-
-### Local checks
-
-```powershell
-npm run build
-npm test
-npm run test:e2e
-node scripts/smoke-site.mjs https://apex.efastt.store/
+```bash
+npm test           # Unit tests
+npm run test:e2e   # Browser tests (currently configured for Microsoft Edge)
+npm run build     # Type checks, translation checks and production build
 ```
 
-The public-site smoke check uses an isolated browser and simulated gamepad to verify assets, combos, bindings and languages. Set `SMOKE_PROXY` to a proxy address if your network requires one.
+Maintain translations in `src/locales/messages.tsv` using Chinese source, English and Japanese columns. Preserve placeholders and run `npm run i18n:build` to generate language files.
 
-Browser tests run headless Edge with simulated standard gamepads. They cover imports, remaps, combo progression, chords, pauses, controller labels, language persistence, clipboard fallback and mobile layouts. They do not replace physical-device testing.
+Report problems through [Issues](https://github.com/reloadggg/apex-input-range/issues) or submit a pull request. For controller compatibility reports, include the model, connection method and browser version.
 
-Translations are maintained in `src/locales/messages.tsv` as Chinese source / English / Japanese columns, separated by tabs. Preserve every `{{0}}` placeholder. `npm run i18n:build` extracts required messages, validates translations and generates JSON dictionaries; production builds run it automatically. Rendering translates UI text without rewriting stored IDs or bindings. File names use `translate="no"`.
+## License
+
+[MIT License](LICENSE) · Copyright (c) 2026 reloadggg.
